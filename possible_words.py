@@ -10,6 +10,8 @@ def two_lists_merging(list1, list2):
 
 def possible_words(word) :
 
+    word = word.upper()
+
     # taille du mot passé en entrée
     n = len(word)
 
@@ -26,11 +28,14 @@ def possible_words(word) :
         words_list = two_lists_merging(words_list,list_char[count])
         count += 1
     
+    for i in range(len(words_list)):
+        words_list[i] = words_list[i].lower()
+
     # Résultat
     return words_list
 
 # Test d'affichage du résultat
-#print(possible_words('MZIS'))
+# print(possible_words('mzis'))
 
 
 

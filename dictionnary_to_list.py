@@ -5,9 +5,9 @@ def dictionnary_to_list(file) :
     with open(file, 'r') as f :
         lignes = f.readlines()
         for ligne in lignes :
-            final_list.append(ligne.strip('\n'))
+            final_list.append((ligne.strip('\n')).lower())
     # Résultat
     return final_list
 
 # Test d'affichage du résultat
-# print(dictionnary_to_list('listemots.txt'))
+# print(dictionnary_to_list('dico.txt'))
