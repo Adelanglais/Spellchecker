@@ -8,7 +8,7 @@ def two_lists_merging(list1, list2):
             final_list.append(element1+element2)
     return final_list
 
-def possibleWords(word) :
+def possible_words(word) :
 
     # taille du mot passé en entrée
     n = len(word)
@@ -30,7 +30,7 @@ def possibleWords(word) :
     return words_list
 
 # Test d'affichage du résultat
-print(possibleWords('MZIS'))
+#print(possible_words('MZIS'))
 
 
 
