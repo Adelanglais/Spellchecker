@@ -57,7 +57,11 @@ def letter_next_to (letter) :
         list_nextCharacter = ['Y','T','G','H','U']
     if letter == 'Z':
         list_nextCharacter = ['Z','A','Q','S','E']
+    else :
+        None
     
+    # Résultat
     return list_nextCharacter
-    
+
+# Test d'affichage du résultat    
 #print(nextCharacter('A'))
