@@ -9,4 +9,4 @@ def dictionnary_to_list(file) :
     return final_list
 
 # Test d'affichage du résultat
-print(dictionnary_to_list('listemots.txt'))
+# print(dictionnary_to_list('listemots.txt'))
