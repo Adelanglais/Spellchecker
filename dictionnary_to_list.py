@@ -1,4 +1,3 @@
-import readline
 
 def dictionnary_to_list(file) :
     final_list = []
@@ -10,4 +9,4 @@ def dictionnary_to_list(file) :
     return final_list
 
 # Test d'affichage du résultat
-# print(dictionnary_to_list('dico.txt'))
+print(dictionnary_to_list('listemots.txt'))
