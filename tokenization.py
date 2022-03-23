@@ -1,6 +1,6 @@
 def tokanization(file):
     
-    final_list = []    
+    tokens= []    
     ponctuation = ['.',',',':','?','!','(',')','/','#',]
     
     with open(file, 'r') as f :
@@ -15,15 +15,15 @@ def tokanization(file):
                 string = string.replace(char,char + " ")
         
         word = string.split(' ')
-        final_list.extend(word)
+        tokens.extend(word)
 
-    while " " in final_list:
-         del final_list[final_list.index(' ')]
-    while "" in final_list:
-         del final_list[final_list.index('')]
+    while " " in tokens:
+         del tokens[tokens.index(' ')]
+    while "" in tokens:
+         del tokens[tokens.index('')]
 
     # Résultat  
-    return final_list
+    return tokens
 
 # test affichage des résultats
 #print(tokanization('text.txt'))
