@@ -8,6 +8,17 @@ def levenshtein_distance(chaine1,chaine2):
     La distance de Levenshtein est une mesure permettant d'évaluer la distance entre deux chaînes de caractère.
     Elle se calcul avec la détermination du nombre minimum de caractère à modifier pour transformer la chaîne en une autre. 
     Il faut calculer la distance entre deux lettres à la même position dans les deux chaînes.
+    
+    Paramètres
+    ----------
+    chaine1 : mot 1 à comparer
+    chaine2 : mot 2 à comparer
+
+    Returns
+    -------
+    int
+        la distance entre les deux chaînes passées en paramètres 
+
     """
     taille_chaine1 = len(chaine1) + 1
     taille_chaine2 = len(chaine2) + 1
@@ -36,7 +47,25 @@ def levenshtein_distance(chaine1,chaine2):
     return (distance)
 
 def closests_words(word, dictionnary):
-    #list_words = existing_words(word,dictionnary)
+
+    """Calcul de la distance Lexicographique
+
+    Cette fonction calcule la distance de Levenshtein entre un mot
+    présenté en entrée et chacun des mots composant le dictionnaire
+
+    Paramètres
+    ----------
+    word : le mot à analyser
+    dictionnaire : le dictionnaire
+
+    Returns 
+    -------
+    list 
+        la liste des mots du dictionnaire dont la distance avec le mot
+        est inférieure à certain seuil
+    
+    """
+
     word = word.lower()
     list_dictionnary = dictionnary_to_list(dictionnary)
     closests_words = []
