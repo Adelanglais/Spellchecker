@@ -10,6 +10,20 @@ def two_lists_merging(list1, list2):
 
 def possible_words(word) :
 
+    """Ensemble des corrections du mot possibles
+
+    Paramètres
+    ----------
+    word : mot étudié
+
+    Returns
+    -------
+    list
+        une liste contenant toutes les ombinaison de corrections
+        des caractères qui composent le mot étudié
+    
+    """
+
     word = word.upper()
 
     # taille du mot passé en entrée
