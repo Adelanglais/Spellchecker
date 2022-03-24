@@ -1,7 +1,26 @@
 def tokanization(file):
+    """ Fonction de tokenisation 
+    
+    Cette fonction permet de segmenter un texte
+
+    Paramètres 
+    -----------
+    file : fichier txt 
+
+    Returns
+    -------
+    list
+        une liste contenant les tokens du texte
+
+    Règles de segmentation 
+    -----------------------
+    - suppression des ponctions --> . , ! ? / () % # : 
+    - cas de l'appostrophe --> séparation du mot en deux, l'appostrophe est conservée avec le mot à gauche
+    - cas du trait d'union --> pas de découpage
+    """ 
     
     tokens= []    
-    ponctuation = ['.',',',':','?','!','(',')','/','#',]
+    ponctuation = ['.',',',':','?','!','(',')','/','#','=','%']
     
     with open(file, 'r') as f :
         string = f.read()
@@ -26,4 +45,4 @@ def tokanization(file):
     return tokens
 
 # test affichage des résultats
-#print(tokanization('text.txt'))
+# print(tokanization('text.txt'))
