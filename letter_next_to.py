@@ -1,7 +1,18 @@
-
 def letter_next_to (letter) :
     
-    # Fonction de correction d'un caractère en un caractère voisin
+    """Fonction de correction d'un caractère en un caractère voisin
+
+    Paramètres
+    ----------
+    letter : la lettre tapée
+
+    Returns
+    -------
+    list
+        liste des caractères voisins à la lettre tapée
+        (clavier AZERTY) 
+
+    """
 
     list_nextCharacter = []
     
