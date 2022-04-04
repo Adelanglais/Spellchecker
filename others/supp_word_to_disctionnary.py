@@ -16,5 +16,5 @@ def supp_word_to_dictionnary(word,file) :
     return 
 
 #Test et affichage
-supp_word_to_dictionnary('BOUBliboulga','listemots copy.txt')
-print(dictionnary_to_list('listemots copy.txt'))
+# supp_word_to_dictionnary('BOUBliboulga','listemots.txt')
+# print(dictionnary_to_list('listemots.txt'))
