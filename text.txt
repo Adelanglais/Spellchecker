@@ -1,10 +1,1 @@
-Une Hirondelle en ses voyages
-Avait beaucoup appris. Quiconque a beaucoup vu
-Peut avoir beaucoup retenu.
-Celle-ci prévoyait jusqu'aux moindres orages,
-Et devant qu'ils fussent éclos,
-Les annonçait aux Matelots.
-Ceci est : un test !
-ayants-droits
-(j'en ai marre)
-#python
+Bonjour et au revoir ! Je m'appelle John Doe, j'ai 27 ans, j'habite en France et travaille depuis que j'ai 20 ans. Ma passion~: Ã©crire des mots, mits, mets, mats, mat... Pour me contacter, vous pouvez envoyer un email Ã  contact@johndoe.fr ou contact@johndoe.com ou bien m'appeler au 06 07 08 09 10. Vous pouvez aussi aller voir mon blog Ã  l'adresse johndoe-blog.fr. Bonjour et au revoir
