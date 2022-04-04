@@ -19,7 +19,7 @@ def possible_words(word) :
     Returns
     -------
     list
-        une liste contenant toutes les ombinaison de corrections
+        une liste contenant toutes les combinaison de corrections
         des caractères qui composent le mot étudié
     
     """

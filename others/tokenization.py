@@ -1,4 +1,4 @@
-def tokanization(file):
+def tokenization(file):
     
     """ Fonction de tokenisation 
     
@@ -52,4 +52,4 @@ def tokanization(file):
     return tokens
 
 # test affichage des résultats
-# print(tokanization('text.txt'))
+# print(tokenization('text.txt'))
