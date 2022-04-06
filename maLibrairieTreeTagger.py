@@ -49,22 +49,25 @@ def analyserFichier(filename):
     #Lecture du contenu du compte-rendu
     contenu = document_source.read()
 
-    regex1 = 'Bonjour'
-    replace1 = '<BONJOUR>'
+    # Regex - Numéro de téléphone
+    regex_num = '([\+])?((([\d]{2,3}( )?(.)?){4,5}([\d]{2}){1})|(\d{10}))'
+    replace_num = '<NUMERO TELEPHONE>'
 
-    regex2 = 'John'
-    replace2 = '<PRENOM>'
+    # Regex - Adresse e-mail
+    regex_mail = '[a-z\d_.%+-]+@[a-z\d.-]+\.[a-z]{2,4}'
+    replace_mail = '<ADRESSE MAIL>'
 
-    regex3 = '27'
-    replace3 = '<AGE>'
+    # Regex - Adresse Web
+    regex_web = '(https(s)?://)?(www\.)?(?<!@)[\w\-\.]+(\.com|\.fr)(/[\w]*)*'
+    replace_web = '<ADRESSE INTERNET>'
 
     # Liste des expressions régulières à chercher dans le texte
-    liste_regex = [[regex1,replace1],[regex2,replace2],[regex3,replace3]]
+    liste_regex = [[regex_num,replace_num],[regex_mail,replace_mail],[regex_web,replace_web]]
     
     for i in range(len(liste_regex)):
         annotated_file = re.sub(liste_regex[i][0],liste_regex[i][1],contenu)
         contenu = annotated_file
-    #print(annotated_file)
+    print(annotated_file)
 
     annotations = analyseMorphoSyntaxiqueTexte(annotated_file)
     
@@ -89,5 +92,5 @@ def analyserFichier(filename):
     return final_liste
 
 # Test d'affichage du résultat
-print(analyserFichier("text.txt"))
+analyserFichier("text.txt")
     
