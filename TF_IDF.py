@@ -1,12 +1,18 @@
 from ast import arguments
+from matplotlib import collections
 from matplotlib.pyplot import text
-from maLibrairieTreeTagger import *
+from prometheus_client import Counter
+from TreeTagger import *
 import math 
 import argparse
 import sys
-
+import os
 from os import listdir
 from os.path import isfile, join
+from collections import defaultdict 
+import collections
+from collections import Counter
+
 
 def getLemmes (file):
 
@@ -41,20 +47,58 @@ def computeTF(file):
     
     return tfDict
 
-
+ 
 # Calcul de IDF - Donne la fréquence de documents du corpus contenant le terme T
 def computeIDF(corpus):
+    
     fichiers = [f for f in listdir(corpus) if isfile(join(corpus, f))]
     N = len(fichiers)
+    lemmes_liste = []
     idfDict = {}
-
-    for i in range(N):
-        lemmes_liste = getLemmes(fichiers[i])
-
     
+    for nom_document in fichiers :
+
+        filename = corpus + "/" + nom_document
+        lemmes = getLemmes(filename)
+        lemmes_liste.append(lemmes)
+
+    idfCnt = Counter()
+    for i in range(len(lemmes_liste)):
+        for j in range (len(lemmes_liste[i])):
+            idfCnt[lemmes_liste[i][j]] +=1
+           
+    
+    print(idfCnt)
+    
+    for key, val in idfCnt.items():
+        idfCnt[key] = math.log(N/float(val))
+    print(idfCnt)
+    
+    return idfCnt     
+
+computeIDF('corpus_test')
+
+"""
+def computeTFIDF(corpus):
+    
+    tfidf = {}
+    TF_liste = []
+
+    IDF = computeIDF(corpus)
+    print(IDF)
+    
+    fichiers = [f for f in listdir(corpus) if isfile(join(corpus, f))]
+    for nom_document in fichiers :
+        filename = corpus + "/" + nom_document
+        TF = computeTF(filename)
+        print(TF)
+    
+        for key, val in TF.items():
+            tfidf[key] = val *  IDF[key]
+    
+    return tfidf
 
 
+print(computeTFIDF('corpus_test'))
 
-
-computeIDF('Baudelaire')
-
+ """
