@@ -1,7 +1,5 @@
 """
-Created on Sun Mar 21 06:33:58 2021
-
-@author: Adrien UGON <adrien.ugon@esiee.fr>
+Cette fonction est fortement inspirée du programme proposé par Adrien UGON <adrien.ugon@esiee.fr>
 """
 
 import treetaggerwrapper
@@ -32,6 +30,7 @@ def getAnnotationsFromTreeTaggerTags(tags):
             
     return annotations
 
+
 # Analyse morphosyntaxique
 def analyseMorphoSyntaxiqueTexte(texte, langue='fr'):
     # On exécute Tree-Tagger
@@ -40,6 +39,7 @@ def analyseMorphoSyntaxiqueTexte(texte, langue='fr'):
     tags = tagger.tag_text(texte)
     
     return getAnnotationsFromTreeTaggerTags(tags)
+
 
 def analyserFichier(filename):
 
@@ -50,27 +50,30 @@ def analyserFichier(filename):
     contenu = document_source.read()
 
     # Regex - Numéro de téléphone
-    regex_num = '([\+])?((([\d]{2,3}( )?(.)?){4,5}([\d]{2}){1})|(\d{10}))'
-    replace_num = '<NUMERO TELEPHONE>'
+    regex_num = "([\+])?((([\d]{2,3}( )?(.)?){4,5}([\d]{2}){1})|(\d{10}))"
+    replace_num = "<NUMERO_TELEPHONE>"
 
     # Regex - Adresse e-mail
-    regex_mail = '[a-z\d_.%+-]+@[a-z\d.-]+\.[a-z]{2,4}'
-    replace_mail = '<ADRESSE MAIL>'
+    regex_mail = "[a-z\d_.%+-]+@[a-z\d.-]+\.[a-z]{2,4}"
+    replace_mail = "<ADRESSE_MAIL>"
 
     # Regex - Adresse Web
-    regex_web = '(https(s)?://)?(www\.)?(?<!@)[\w\-\.]+(\.com|\.fr)(/[\w]*)*'
-    replace_web = '<ADRESSE INTERNET>'
+    regex_web = "(https(s)?://)?(www\.)?(?<!@)[\w\-\.]+(\.com|\.fr)(/[\w]*)*"
+    replace_web = "<ADRESSE_INTERNET>"
+
+    # Regex - Code postal
+    regex_CP = "(?<!\d\w)[0-9]{5}(?!\d\w)"
+    replace_CP = "<CODE_POSTAL>"
 
     # Liste des expressions régulières à chercher dans le texte
-    liste_regex = [[regex_num,replace_num],[regex_mail,replace_mail],[regex_web,replace_web]]
-    
+    liste_regex = [[regex_num,replace_num],[regex_mail,replace_mail],[regex_web,replace_web],[regex_CP,replace_CP]]
+
     for i in range(len(liste_regex)):
         annotated_file = re.sub(liste_regex[i][0],liste_regex[i][1],contenu)
         contenu = annotated_file
-    print(annotated_file)
-
-    annotations = analyseMorphoSyntaxiqueTexte(annotated_file)
     
+    annotations = analyseMorphoSyntaxiqueTexte(annotated_file) 
+
     word = []
     final_liste = []
 
@@ -86,11 +89,12 @@ def analyserFichier(filename):
             word.append(annotation[1])
             word.append(annotation[3])
             #print("{}\t{}\t\t{}" . format(annotation[0],annotation[1],annotation[3]))
+        
         final_liste.append(word)
-        word = []
-    
+        word=[]
+
     return final_liste
 
 # Test d'affichage du résultat
-analyserFichier("text.txt")
+# print(analyserFichier("text.txt"))
     
