@@ -22,7 +22,7 @@ def getLemmes (file):
     lemmes = []
     for i in range(len(liste_analyse)):
         # suppression des ponctuation et des numéros car non pertinents pour l'analyse des 
-        if (liste_analyse[i][1] == 'SENT' or liste_analyse[i][1] == 'PUN' or liste_analyse[i][1] == 'NUM'):
+        if (liste_analyse[i][1] == 'SENT' or liste_analyse[i][1] == 'PUN'):
             pass
         else:
             # gestion des termes avec une sous-catégorie grammaticale
@@ -33,7 +33,6 @@ def getLemmes (file):
                 lemmes.append(liste_analyse[i][2])
     
     return lemmes
-    #print(lemmes)
 
 # Calcul de TF - Donne la fréquence d'un terme dans un document
 def computeTF(file):
@@ -61,44 +60,47 @@ def computeIDF(corpus):
         filename = corpus + "/" + nom_document
         lemmes = getLemmes(filename)
         lemmes_liste.append(lemmes)
-
+    
     idfCnt = Counter()
+  
+    word_liste = []
     for i in range(len(lemmes_liste)):
-        for j in range (len(lemmes_liste[i])):
-            idfCnt[lemmes_liste[i][j]] +=1
-           
+        for j in range(len(lemmes_liste[i])):
+            word_liste.append(lemmes_liste[i][j])
+    word_liste = set(word_liste)
     
-    print(idfCnt)
-    
+    #print(lemmes_liste)
+    for check_word in word_liste:
+        for list in lemmes_liste:
+            for word in list:
+                if word == check_word : 
+                    idfCnt[word] += 1
+                    break
+             
     for key, val in idfCnt.items():
         idfCnt[key] = math.log(N/float(val))
-    print(idfCnt)
+    #print(idfCnt)
     
     return idfCnt     
 
-computeIDF('corpus_test')
 
-"""
+# Calcul du score TF-IDf de l'ensemble des textes du corpus
 def computeTFIDF(corpus):
     
-    tfidf = {}
+    tfidf = Counter()
     TF_liste = []
 
     IDF = computeIDF(corpus)
-    print(IDF)
-    
+
     fichiers = [f for f in listdir(corpus) if isfile(join(corpus, f))]
     for nom_document in fichiers :
         filename = corpus + "/" + nom_document
         TF = computeTF(filename)
-        print(TF)
     
         for key, val in TF.items():
             tfidf[key] = val *  IDF[key]
     
     return tfidf
 
-
-print(computeTFIDF('corpus_test'))
-
- """
+# Affichage des résultats
+#print(computeTFIDF('Baudelaire'))
