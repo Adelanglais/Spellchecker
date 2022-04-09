@@ -27,6 +27,26 @@ def getLemmes (file):
     
     return lemmes
 
+def getTokens (file):
+
+    # récupération de la liste des tokens + lemmes (analyse morphosyntaxique)
+    liste_analyse = analyserFichier(file)
+
+    tokens = []
+    for i in range(len(liste_analyse)):
+        # suppression des ponctuation et des numéros car non pertinents pour l'analyse des 
+        if (liste_analyse[i][1] == 'SENT' or liste_analyse[i][1] == 'PUN'):
+            pass
+        else:
+            # gestion des termes avec une sous-catégorie grammaticale
+            if(len(liste_analyse[i])>3):
+                # récupération des lemmes
+                tokens.append(liste_analyse[i][3])
+            else :
+                tokens.append(liste_analyse[i][2])
+    
+    return tokens
+
 # Calcul de TF - Donne la fréquence d'un terme dans un document
 def computeTF(file):
     lemmes_liste = getLemmes(file)
@@ -78,22 +98,25 @@ def computeIDF(corpus):
 
 
 # Calcul du score TF-IDf de l'ensemble des textes du corpus
-def computeTFIDF(corpus):
+def computeTFIDF(file, corpus):
     
     tfidf = Counter()
     TF_liste = []
 
-    IDF = computeIDF(corpus)
+    TF = computeTF(file) # fréquence du mot dans le text
+    IDF = computeIDF(corpus) # rareté du mot dans le corpus de référence
 
-    fichiers = [f for f in listdir(corpus) if isfile(join(corpus, f))]
-    for nom_document in fichiers :
-        filename = corpus + "/" + nom_document
-        TF = computeTF(filename)
-    
-        for key, val in TF.items():
-            tfidf[key] = val *  IDF[key]
-    
+    print(TF)
+    print(IDF)
+
+    for keyTF, valTF in TF.items():
+        for keyIDF, valIDF in IDF.items():
+            if(keyTF == keyIDF):
+                tfidf[keyTF] = valTF * valIDF
+            
+            #Gestion du cas où le mot testé n'est pas présent dans le corpus de référence ??? 
+                      
     return tfidf
 
 # Affichage des résultats
-print(computeTFIDF('corpus_test'))
+# computeTFIDF('text.txt','corpus_test')
