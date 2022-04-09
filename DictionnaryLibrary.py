@@ -26,7 +26,8 @@ def dictionnary_to_list(file) :
 # print(dictionnary_to_list('listemots.txt'))
 
 def add_word_to_dictionnary(word,file) :
-    """ Ajouter un mot au dictionnaire
+
+    """ Ajout d'un mot au dictionnaire
 
     Paramètres 
     -----------
@@ -35,7 +36,7 @@ def add_word_to_dictionnary(word,file) :
 
     """
 
-    dictionnary=dictionnary_to_list(file)
+    dictionnary = dictionnary_to_list(file)
 
     if (word.lower() not in dictionnary) :
         fichier = open(file, "a")
