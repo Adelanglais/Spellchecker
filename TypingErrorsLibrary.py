@@ -1,3 +1,4 @@
+from typing import final
 from numpy import append
 import numpy as np
 from DictionnaryLibrary import dictionnary_to_list
@@ -157,11 +158,15 @@ def existing_words(word, dictionnary):
     # liste des combinaisons possibles
     words_list = np.array(possible_words(word))
     # comparaison des deux listes 
-    final_liste = np.intersect1d(words_list,dictionnary_list)
-    
+    liste = np.intersect1d(words_list,dictionnary_list)
+
+    final_liste = []
+    for word in liste:
+        final_liste.append(word)
+
     # Résultat
     return final_liste
 
 # Test d'affichage du résultat
-# print(existing_words('mzis','listemots.txt'))
+# print(existing_words('mzis','dictionnaire.txt'))
 
