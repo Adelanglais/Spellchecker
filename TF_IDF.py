@@ -1,16 +1,9 @@
-from ast import arguments
-from matplotlib import collections
 from matplotlib.pyplot import text
 from prometheus_client import Counter
-from TreeTagger import *
+from TreeTaggerLibrary import *
 import math 
-import argparse
-import sys
-import os
 from os import listdir
 from os.path import isfile, join
-from collections import defaultdict 
-import collections
 from collections import Counter
 
 
@@ -103,4 +96,4 @@ def computeTFIDF(corpus):
     return tfidf
 
 # Affichage des résultats
-#print(computeTFIDF('Baudelaire'))
+print(computeTFIDF('corpus_test'))

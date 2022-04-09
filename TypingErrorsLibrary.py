@@ -1,3 +1,8 @@
+from numpy import append
+import numpy as np
+from DictionnaryLibrary import dictionnary_to_list
+
+
 def letter_next_to (letter) :
     
     """Fonction de correction d'un caractère en un caractère voisin
@@ -76,3 +81,87 @@ def letter_next_to (letter) :
 
 # Test d'affichage du résultat    
 #print(nextCharacter('A'))
+
+def two_lists_merging(list1, list2):
+    final_list = []
+    for element1 in list1:
+        for element2 in list2:
+            final_list.append(element1+element2)
+    return final_list
+
+
+def possible_words(word) :
+
+    """Ensemble des corrections du mot possibles
+
+    Paramètres
+    ----------
+    word : mot étudié
+
+    Returns
+    -------
+    list
+        une liste contenant toutes les combinaison de corrections
+        des caractères qui composent le mot étudié
+    
+    """
+
+    word = word.upper()
+
+    # taille du mot passé en entrée
+    n = len(word)
+
+    # création de la liste des fautes possibles pour chaque lettre du mot 
+    list_char = []
+    for letter in word :
+        list_char.append(letter_next_to(letter))
+    
+    n = len(list_char)
+    words_list = list_char[0]
+    count = 1
+
+    while count != n:
+        words_list = two_lists_merging(words_list,list_char[count])
+        count += 1
+    
+    for i in range(len(words_list)):
+        words_list[i] = words_list[i].lower()
+
+    # Résultat
+    return words_list
+
+# Test d'affichage du résultat
+# print(possible_words('mzis'))
+
+def existing_words(word, dictionnary):
+
+    """Filtrage des corrections 
+
+    Fonctions permettant de ne garder que les combinaisons de caractères
+    présentes dans le dictionnaire
+
+    Paramètres
+    ----------
+    word : le mot à analyser
+    dictionnary : le dictionnaire
+
+    Returns
+    -------
+    list 
+        la liste des corrections du mot qui existent dans le dictionnaire
+        
+    
+    """
+    # importation du dictionnaire sous forme de liste
+    dictionnary_list = np.array(dictionnary_to_list(dictionnary))
+    # liste des combinaisons possibles
+    words_list = np.array(possible_words(word))
+    # comparaison des deux listes 
+    final_liste = np.intersect1d(words_list,dictionnary_list)
+    
+    # Résultat
+    return final_liste
+
+# Test d'affichage du résultat
+# print(existing_words('mzis','listemots.txt'))
+

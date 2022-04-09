@@ -1,3 +1,5 @@
+import numpy as np
+
 def levenshtein_distance(chaine1,chaine2):
     """
     La distance de Levenshtein est une mesure permettant d'évaluer la distance entre deux chaînes de caractère.

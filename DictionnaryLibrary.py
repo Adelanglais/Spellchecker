@@ -24,3 +24,24 @@ def dictionnary_to_list(file) :
 
 # Test d'affichage du résultat
 # print(dictionnary_to_list('listemots.txt'))
+
+def add_word_to_dictionnary(word,file) :
+    """ Ajouter un mot au dictionnaire
+
+    Paramètres 
+    -----------
+    word : le mot que l'on veut ajouter au dictionnaire
+    file : le dictionnaire 
+
+    """
+
+    dictionnary=dictionnary_to_list(file)
+
+    if (word.lower() not in dictionnary) :
+        fichier = open(file, "a")
+        # écriture du mot dans le fichier 
+        fichier.write('\n'+ word.lower())
+        fichier.close() 
+      
+    return 
+
