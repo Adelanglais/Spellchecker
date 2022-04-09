@@ -92,8 +92,7 @@ def computeIDF(corpus):
              
     for key, val in idfCnt.items():
         idfCnt[key] = math.log(N/float(val))
-    #print(idfCnt)
-    
+       
     return idfCnt     
 
 
@@ -115,8 +114,8 @@ def computeTFIDF(file, corpus):
                 tfidf[keyTF] = valTF * valIDF
             
             #Gestion du cas où le mot testé n'est pas présent dans le corpus de référence ??? 
-                      
+    
     return tfidf
 
 # Affichage des résultats
-# computeTFIDF('text.txt','corpus_test')
+#computeTFIDF('text.txt','corpus_test')
