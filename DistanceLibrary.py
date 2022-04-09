@@ -1,6 +1,5 @@
 import textdistance
-from dictionnary_to_list import dictionnary_to_list
-from existing_words import existing_words
+from DictionnaryLibrary import dictionnary_to_list
 
 def closests_words(word, dictionnary):
 
@@ -36,4 +35,4 @@ def closests_words(word, dictionnary):
     return closests_words
 
 # test affichage des résultats
-# print(closests_words('mzis','listemots.txt'))
+# print(closests_words('mzis','dictionnary.txt'))
