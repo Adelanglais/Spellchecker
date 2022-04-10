@@ -32,7 +32,11 @@ def closests_words(word, dictionnary):
     
     closests_words = set(closests_words)
 
-    return closests_words
+    final_list = []
+    for word in closests_words:
+        final_list.append(word)
+
+    return final_list
 
 # test affichage des résultats
 # print(closests_words('mzis','dictionnary.txt'))
