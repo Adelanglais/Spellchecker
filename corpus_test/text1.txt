@@ -1,1 +1,1 @@
-Bonjour ! Ceci est un test 
+Bonjour ! Ceci est un test de mon programme.
