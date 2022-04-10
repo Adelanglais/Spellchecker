@@ -111,10 +111,8 @@ def computeTFIDF(file, corpus):
 
     for keyTF, valTF in TF.items():
         for keyIDF, valIDF in IDF.items():
-            #if(keyTF == keyIDF):
             tfidf[keyTF] = valTF * valIDF
             
-    #print("TFIDF : ", tfidf)
     return tfidf
 
 # Affichage des résultats
