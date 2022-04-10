@@ -15,7 +15,8 @@ def getLemmes (file):
     lemmes = []
     for i in range(len(liste_analyse)):
         # suppression des ponctuation et des numéros car non pertinents pour l'analyse des 
-        if (liste_analyse[i][1] == 'SENT' or liste_analyse[i][1] == 'PUN'):
+        if (liste_analyse[i][1] == 'SENT' or liste_analyse[i][1] == 'PUN' or liste_analyse[i][1] == 'KON' or liste_analyse[i][1] == 'DET' or liste_analyse[i][1] == 'PRP' or liste_analyse[i][1] == 'PRO'):
+
             pass
         else:
             # gestion des termes avec une sous-catégorie grammaticale
@@ -34,8 +35,8 @@ def getTokens (file):
 
     tokens = []
     for i in range(len(liste_analyse)):
-        # suppression des ponctuation et des numéros car non pertinents pour l'analyse des 
-        if (liste_analyse[i][1] == 'SENT' or liste_analyse[i][1] == 'PUN'):
+        # suppression des ponctuation, des pronoms, des déterminants et des conjonctions car non pertinents pour l'analyse 
+        if (liste_analyse[i][1] == 'SENT' or liste_analyse[i][1] == 'PUN' or liste_analyse[i][1] == 'KON' or liste_analyse[i][1] == 'DET' or liste_analyse[i][1] == 'PRP' or liste_analyse[i][1] == 'PRO'):
             pass
         else:
             # gestion des termes avec une sous-catégorie grammaticale
@@ -44,19 +45,19 @@ def getTokens (file):
                 tokens.append(liste_analyse[i][3])
             else :
                 tokens.append(liste_analyse[i][2])
-    
+    #print(tokens)
     return tokens
 
 # Calcul de TF - Donne la fréquence d'un terme dans un document
 def computeTF(file):
     lemmes_liste = getLemmes(file)
     wordsCount = len(lemmes_liste)
-    tfDict = {}
+    tfDict = Counter()
     
     for i in range(len(lemmes_liste)):
         c = lemmes_liste.count(lemmes_liste[i])
         tfDict[lemmes_liste[i]] = c / float(len(lemmes_liste))
-    
+        
     return tfDict
 
  
@@ -105,17 +106,16 @@ def computeTFIDF(file, corpus):
     TF = computeTF(file) # fréquence du mot dans le text
     IDF = computeIDF(corpus) # rareté du mot dans le corpus de référence
 
-    print(TF)
-    print(IDF)
+    #print("TF : ",TF)
+    #print("IDF : ",IDF)
 
     for keyTF, valTF in TF.items():
         for keyIDF, valIDF in IDF.items():
-            if(keyTF == keyIDF):
-                tfidf[keyTF] = valTF * valIDF
+            #if(keyTF == keyIDF):
+            tfidf[keyTF] = valTF * valIDF
             
-            #Gestion du cas où le mot testé n'est pas présent dans le corpus de référence ??? 
-    
+    #print("TFIDF : ", tfidf)
     return tfidf
 
 # Affichage des résultats
-#computeTFIDF('text.txt','corpus_test')
+#print(computeTFIDF('text.txt','corpus_test'))
