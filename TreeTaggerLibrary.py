@@ -49,6 +49,7 @@ def analyserFichier(filename):
     #Lecture du contenu du compte-rendu
     contenu = document_source.read()
 
+
     # Regex - Numéro de téléphone
     regex_num = "([\+])?((([\d]{2,3}( )?(.)?){4,5}([\d]{2}){1})|(\d{10}))"
     replace_num = "<NUMERO_TELEPHONE>"
@@ -92,9 +93,9 @@ def analyserFichier(filename):
         
         final_liste.append(word)
         word=[]
-
+  
     return final_liste
 
 # Test d'affichage du résultat
-# print(analyserFichier("text.txt"))
+#print(analyserFichier("text.txt"))
     
