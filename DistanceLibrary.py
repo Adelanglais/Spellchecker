@@ -35,4 +35,4 @@ def closests_words(word, dictionnary):
     return final_list
 
 # test affichage des résultats
-print(closests_words('mzis','dictionnaire.txt'))
+#print(closests_words('mzis','dictionnaire.txt'))
