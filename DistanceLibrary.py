@@ -30,13 +30,9 @@ def closests_words(word, dictionnary):
         if distance <= 1 :
             closests_words.append(j)
     
-    closests_words = set(closests_words)
-
-    final_list = []
-    for word in closests_words:
-        final_list.append(word)
+    final_list = list(set(closests_words))
 
     return final_list
 
 # test affichage des résultats
-# print(closests_words('mzis','dictionnary.txt'))
+print(closests_words('mzis','dictionnaire.txt'))
