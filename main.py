@@ -63,63 +63,103 @@ if __name__ == "__main__":
         """
         Tokenisation et lemmatisation du texte fournit en entrée
         """
-        file_tokens = getTokens(filename)
-        #file_lemmes = getLemmes(filename)
+        file_tokens = list(set(getTokens(filename)))
+        file_lemmes = list(set(getLemmes(filename)))
 
         """
-        L1 - Liste des fautes de frappes
+        L1 et L2 - Création des listes de fautes de frappes
         """
-        L1 = []
-        for i in range(len(file_tokens)):
+        L1 = [] # liste des erreurs frappes
+        L2 = [] # liste basé sur le calcul de distance lexicographique
+
+        for token in file_tokens:
+            
             typing_errors_liste = []
-            correction = existing_words(file_tokens[i],dictionnary)
-            if (len(correction) == 1 and correction[0] == file_tokens[i]):
+            dl_errors_liste = []
+
+            correction_typing = existing_words(token,dictionnary)
+            correction_dl = closests_words(token,dictionnary)
+
+            if (len(correction_typing) == 1 and correction_typing[0] == token):
+                pass
+            elif len(correction_typing)==0 :
                 pass
             else:
-                typing_errors_liste.append(file_tokens[i]) 
-                typing_errors_liste.append(correction)
+                typing_errors_liste.append(token) 
+                typing_errors_liste.append(correction_typing)
                 L1.append(typing_errors_liste)
 
-        """
-        L2 - Liste des distances lexicographiques
-        """
-        """L2 = []
-        for i in range(len(file_tokens)):
-            dl_errors_liste = []
-            correction = closests_words(file_tokens[i],dictionnary)
-            if (len(correction) == 1 and correction[0] == file_tokens[i]):
+            if (len(correction_dl) == 1 and correction_dl[0] == token):
+                pass
+            elif len(correction_dl)==0 :
                 pass
             else:
-                dl_errors_liste.append(file_tokens[i]) 
-                dl_errors_liste.append(correction)
-                L2.append(dl_errors_liste)"""
-        
+                dl_errors_liste.append(token) 
+                dl_errors_liste.append(correction_dl)
+                L2.append(dl_errors_liste)
+            
+        #print("L1 : ", L1)
+        #print("L2 : ",L2)
+
+        """
+        L3 - Combinaison des listes L1 et L2
+        Objectif : n'avoir qu'une seule liste regroupant l'ensemble des corrections possibles quelque soit l'origine de la faute
+        """   
+
+        L1 = np.array(L1, dtype=object)
+        L2 = np.array(L2, dtype=object)
+
+        tokens_L1 = L1[:,0]
+        tokens_L2 = L2[:,0]
+
+        words_L1 = L1[:,1]
+        words_L2 = L2[:,1]
+
+        L3 = []
+
+        for index_L1,token_L1 in enumerate(tokens_L1):
+
+            if token_L1 in tokens_L2:
+                index_L2 = int(np.where(tokens_L2 == token_L1)[0])
+                token_L2 = tokens_L2[index_L2]
+                liste_mots_combines = list(np.unique(np.concatenate((words_L1[index_L1],words_L2[index_L2]),0)))
+                L3.append( [token_L1, liste_mots_combines] )
+            else:
+                L3.append( list(L1[index_L1,:]) )
+
+
+        for index_L2,token_L2 in enumerate(tokens_L2):
+
+            if not token_L2 in tokens_L1: L3.append( list(L2[index_L2,:]) )
+            
+        #print("L3.1 : ",L3)
+
+
         """
         TF-IDF
         """
         tfidf = computeTFIDF(filename,corpus)
 
         """
-        Tri de L1 et L2 par TF-IDF
+        Tri de L3 par TF-IDF
         """
-        for liste in L1:
+        
+        for liste in L3:
             for key, val in tfidf.items():
                 if ( liste[0] == key):
                     liste.append(val)
-        L1 = sorted(L1,key = lambda x:x[2],reverse = True)
-
-        """for liste in L2:
-            for key, val in tfidf.items():
-                if ( liste[0] == key):
-                    liste.append(val)
-        L2 = sorted(L2,key = lambda x:x[2],reverse = True)"""
-
+        L3 = sorted(L3,key = lambda x:x[2],reverse = True)
+        
+        #print("L3.2 : ",L3)
+        
+        
         with open(filename, 'r+') as firstfile, open('correctedText.txt','a') as secondfile:
             secondfile.truncate(0)          # on supprimer tout ce qu'il y a écrit dans le fichier
             for line in firstfile :
                 secondfile.write(line) # on recopie le premier fichier dans le fichier retour de correction
+        
 
-        print("\nCORRCTIONS - FAUTES DE FRAPPES :")
+        print("\nCORRECTEUR D\'ORTHOGRAPHE :")
         print("--------------------------------")
         print("Tapez l'indice de la correction que vous souhaitez effectuer.")
         print("Revoir  -->  ['debout', 'devoir', 'revoir'] : pour changer 'revoir' en 'debout', tapez 1.")
@@ -127,7 +167,7 @@ if __name__ == "__main__":
         print("Pour ne rien faire, tapez -.")
         print("--------------------------------\n")
         
-        for liste in L1 :
+        for liste in L3 :
             
             print ("Suggestions de corrections pour : ", liste[0], " --> ", liste[1])
             
@@ -157,36 +197,6 @@ if __name__ == "__main__":
                     with open('correctedText.txt','w') as file :
                         file.write(x)
         
-        print("\nCORRCTIONS - DISTANCE LEXICOGRAPHIQUE :")
-        print("--------------------------------")
-        print("Tapez l'indice de la correction que vous souhaitez effectuer.")
-        print("Revoir  -->  ['debout', 'devoir', 'revoir'] : pour changer 'revoir' en 'debout', tapez 1.")
-        print("Pour ajouter le mot au dictionnaire, tapez +.")
-        print("Pour ne rien faire, tapez -.")
-        print("--------------------------------\n")
-
-        """
-        for liste in L2 :
-            
-            print ("Suggestions de corrections pour : ", liste[0], " --> ", liste[1])
-            
-            j = input("Choisissez le mot (tapez l'indice - début à 1) : ")
-
-            j = int(j) -1 
-        
-            if (j > (len(liste[1]))):
-                print("Choix incorrect") 
-
-            else:
-                print (liste[0], " sera remplacé par ", liste[1][j], " dans le texte.")
-
-                with open('correctedText.txt','r') as file :
-                    x = file.read()
-                    x = x.replace(liste[0],liste[1][j])
-                
-                with open('correctedText.txt','w') as file :
-                    file.write(x)
-        """
 
         print("\nFICHIER AVEC CORRECTION :")
         print("----------------------------")
