@@ -65,6 +65,9 @@ if __name__ == "__main__":
         """
         file_tokens = list(set(getTokens(filename)))
         file_lemmes = list(set(getLemmes(filename)))
+        
+        #print(file_tokens)
+        #print(file_lemmes)
 
         """
         L1 et L2 - Création des listes de fautes de frappes
@@ -76,6 +79,7 @@ if __name__ == "__main__":
             
             typing_errors_liste = []
             dl_errors_liste = []
+            token = token.lower()
 
             correction_typing = existing_words(token,dictionnary)
             correction_dl = closests_words(token,dictionnary)
@@ -105,7 +109,7 @@ if __name__ == "__main__":
         L3 - Combinaison des listes L1 et L2
         Objectif : n'avoir qu'une seule liste regroupant l'ensemble des corrections possibles quelque soit l'origine de la faute
         """   
-
+        
         L1 = np.array(L1, dtype=object)
         L2 = np.array(L2, dtype=object)
 
@@ -148,10 +152,12 @@ if __name__ == "__main__":
             for key, val in tfidf.items():
                 if ( liste[0] == key):
                     liste.append(val)
+        
         L3 = sorted(L3,key = lambda x:x[2],reverse = True)
-        
-        #print("L3.2 : ",L3)
-        
+                
+        """
+        Gestion du fichier de correction
+        """
         
         with open(filename, 'r+') as firstfile, open('correctedText.txt','a') as secondfile:
             secondfile.truncate(0)          # on supprimer tout ce qu'il y a écrit dans le fichier
