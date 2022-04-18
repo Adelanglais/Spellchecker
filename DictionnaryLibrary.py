@@ -14,7 +14,7 @@ def dictionnary_to_list(file) :
     """
 
     final_list = []
-    with open(file, 'r') as f :
+    with open(file, 'r',encoding='UTF-8') as f :
         lignes = f.readlines()
         for ligne in lignes :
             final_list.append((ligne.strip('\n')).lower())
@@ -39,7 +39,7 @@ def add_word_to_dictionnary(word,file) :
     dictionnary = dictionnary_to_list(file)
 
     if (word.lower() not in dictionnary) :
-        fichier = open(file, "a")
+        fichier = open(file, "a",encoding='UTF-8')
         # écriture du mot dans le fichier 
         fichier.write('\n'+ word.lower())
         fichier.close() 
