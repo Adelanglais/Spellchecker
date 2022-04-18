@@ -12,7 +12,7 @@ def parser_arguments():
     :return : parser
     """
     parser = argparse.ArgumentParser(prog = 'Correcteur_ToolKit',
-                                    usage = 'python3 %(prog)s [command] --text [option] --corpus [option]',
+                                    usage = 'python3 %(prog)s [command] --text [option] --corrected [option] --corpus [option]',
                                     description='Ce programme permet de corriger les erreurs d\'un text par rapport à un corpus de référence')
     parser.add_argument("command",
                         metavar= "<command>: 'getOriginalText', 'doCorrections' or 'compareTexts'.",
@@ -20,6 +20,9 @@ def parser_arguments():
     parser.add_argument('--text', required=False, nargs='+',
                     metavar="filename",
                     help="Sequence of 'strings' of the wanted text")
+    parser.add_argument('--corrected', required=False, nargs='+',
+                    metavar="filename",
+                    help="Sequence of 'strings' of the corrected text")
     parser.add_argument('--corpus', required=False, nargs='+',
                     metavar="corpus name",
                     help="Sequence of 'strings' of the wanted corpus")
@@ -58,20 +61,22 @@ if parser_arguments().command == 'getOriginalText':
         else : 
             printText(parser_arguments().text[0])
 
-""" if parser_arguments().command == 'compareTexts':
-
-        if parser_arguments().text is None:
-            print("Missing text argument")
-            exit(1)
-
-        else : 
-            print("\nORIGINAL TEXT :")
-            print("---------------")
-            printText(parser_arguments().text[0])
-
-            print("\nCORRECTED TEXT :")
-            print("------------------")
-            printText(parser_arguments().text[1]) """
+if parser_arguments().command == 'compareTexts':
+    if parser_arguments().text is None:
+        print("Missing text argument")
+        exit(1)
+    if parser_arguments().corrected is None:
+        print("Missing corrected text argument")
+        exit(1)
+    else : 
+        print("\nORIGINAL TEXT :")
+        print("---------------")
+        printText(parser_arguments().text[0])
+        
+        print("\nCORRECTED TEXT :")
+        print("---------------")
+        fichier = open(parser_arguments().corrected[0],'r')
+        print(fichier.read())
 
 if parser_arguments().command == 'doCorrections':
     if parser_arguments().text is None:
@@ -185,7 +190,7 @@ if __name__ == "__main__":
         Tri des corrections possibles pour chaque mots - on ne garde que celles qui sont les plus probables
         """
 
-        """ idf = computeIDF(corpus) # calcul de l'importance des mots dans le corpus
+        idf = computeIDF(corpus) # calcul de l'importance des mots dans le corpus
 
         for i in range(len(L3)):
 
@@ -209,8 +214,7 @@ if __name__ == "__main__":
             
             L3[i][1] = new
         
-        print("L3.2 : ",L3) """
-        
+           
         """
         Tri de la liste des corrections - Priorisation des mots les plus saillants
         """
