@@ -56,7 +56,7 @@ def computeTF(file):
         
     return tfDict
 
-#print(computeTF('text.txt'))
+#print(computeTF('mail.txt'))
 
 # Calcul de IDF - Donne la fréquence de documents du corpus contenant le terme T
 def computeIDF(corpus):
@@ -123,4 +123,4 @@ def computeTFIDF(file, corpus):
     return tfidf
 
 # Affichage des résultats
-#print(computeTFIDF('text.txt','corpus_test'))
+#print(computeTFIDF('mail.txt','corpus_mail'))
