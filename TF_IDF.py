@@ -15,7 +15,7 @@ def getLemmes (file):
     lemmes = []
     for i in range(len(liste_analyse)):
         # suppression des ponctuation et des numéros car non pertinents pour l'analyse des 
-        if (liste_analyse[i][1] == 'SENT' or liste_analyse[i][1] == 'PUN' or liste_analyse[i][1] == 'KON' or liste_analyse[i][1] == 'DET' or liste_analyse[i][1] == 'PRP'):
+        if (liste_analyse[i][1] == 'SENT' or liste_analyse[i][1] == 'PUN' or liste_analyse[i][1] == 'KON' or liste_analyse[i][1] == 'DET' or liste_analyse[i][1] == 'PRP' or liste_analyse[i][1] == 'PRO'):
 
             pass
         else:
@@ -37,7 +37,7 @@ def getTokens (file):
     tokens = []
     for i in range(len(liste_analyse)):
         # suppression des ponctuation, des pronoms, des déterminants et des conjonctions car non pertinents pour l'analyse 
-        if (liste_analyse[i][1] == 'SENT' or liste_analyse[i][1] == 'PUN' or liste_analyse[i][1] == 'KON' or liste_analyse[i][1] == 'DET' or liste_analyse[i][1] == 'PRP'):
+        if (liste_analyse[i][1] == 'SENT' or liste_analyse[i][1] == 'PUN' or liste_analyse[i][1] == 'KON' or liste_analyse[i][1] == 'DET' or liste_analyse[i][1] == 'PRP' or liste_analyse[i][1] == 'PRO'):
             pass
         else:
             tokens.append((liste_analyse[i][0]).lower())

@@ -1,6 +1,6 @@
 from DictionnaryLibrary import add_word_to_dictionnary, dictionnary_to_list
 from DistanceLibrary import closests_words
-from TF_IDF import computeTFIDF, getLemmes, getTokens
+from TF_IDF import computeIDF, computeTFIDF, getLemmes, getTokens
 from TreeTaggerLibrary import analyserFichier
 from TypingErrorsLibrary import existing_words
 import numpy as np
@@ -135,9 +135,6 @@ if __name__ == "__main__":
         for index_L2,token_L2 in enumerate(tokens_L2):
 
             if not token_L2 in tokens_L1: L3.append( list(L2[index_L2,:]) )
-            
-        #print("L3.1 : ",L3)
-
 
         """
         TF-IDF
@@ -145,7 +142,34 @@ if __name__ == "__main__":
         tfidf = computeTFIDF(filename,corpus)
 
         """
-        Tri de L3 par TF-IDF
+        Tri des corrections possibles pour chaque mots - on ne garde que celles qui sont les plus probables
+        """
+
+        idf = computeIDF(corpus) # calcul de l'importance des mots dans le corpus
+
+        for i in range(len(L3)):
+
+            corrections = L3[i][1]
+            new = []
+
+            for word in corrections:
+                
+                # Traitement du cas où la correction n'est pas présente dans le corpus
+                # Toutes les corrections sont gardées
+                if word not in idf.keys():
+                    new.append(word)
+
+                # Si la correction est dans le corpus et que sa valeur d'IDF est supérieure à un certain seuil, on garde 
+                # la correction
+                # Sinon, la correction n'est pas conservée car non pertinente par rapport au corpus   
+                for key, val in idf.items():
+                    if word == key and val > 1 : 
+                        new.append(word)
+            
+            L3[i][1] = new
+
+        """
+        Tri de la liste des corrections - Priorisation des mots les plus saillants
         """
         
         for liste in L3:
@@ -154,7 +178,7 @@ if __name__ == "__main__":
                     liste.append(val)
         
         L3 = sorted(L3,key = lambda x:x[2],reverse = True)
-                
+                        
         """
         Gestion du fichier de correction
         """
