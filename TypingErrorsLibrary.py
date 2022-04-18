@@ -108,7 +108,7 @@ def possible_words(word) :
     """
 
     word = word.upper()
-
+    
     # taille du mot passé en entrée
     n = len(word)
 
@@ -168,5 +168,5 @@ def existing_words(word, dictionnary):
     return final_liste
 
 # Test d'affichage du résultat
-# print(existing_words('mzis','dictionnaire.txt'))
+#print(existing_words('mzis','dictionnaire.txt'))
 
