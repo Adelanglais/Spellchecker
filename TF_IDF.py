@@ -90,8 +90,8 @@ def computeIDF(corpus):
              
     for key, val in idfCnt.items():
         idfCnt[key] = math.log(N/float(val))
-       
-    return idfCnt     
+      
+    return idfCnt   
 
 #print(computeIDF('corpus_test'))
 
@@ -107,19 +107,24 @@ def computeTFIDF(file, corpus):
     TF = computeTF(file) # fréquence du mot dans le text
     IDF = computeIDF(corpus) # rareté du mot dans le corpus de référence
 
+    
     #print("TF : ",TF)
     #print("IDF : ",IDF)
-
+    
     for keyTF, valTF in TF.items():
         for keyIDF, valIDF in IDF.items():
             
             if keyTF == keyIDF:
                 tfidf[keyTF] = valTF * valIDF
 
-            else: # cas où le mot traité n'est pas présent dans le corpus de text --> soit le mot est rare, soit le mot est mal orthographié
-                tfidf[keyTF] = valTF * math.log(N) 
+        if IDF.get(keyTF)==None : # cas où le mot traité n'est pas présent dans le corpus de text --> soit le mot est rare, soit le mot est mal orthographié
+            # tfidf[keyTF] = valTF * math.log(N)
+            tfidf[keyTF] = valTF*10
+            print(keyTF) 
             
     return tfidf
 
 # Affichage des résultats
-#print(computeTFIDF('text.txt','corpus_test'))
+#print(computeTFIDF('text.txt','Baudelaire'))
+print(computeIDF('Baudelaire'))
+#print(computeTF('text.txt'))
