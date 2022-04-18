@@ -1,7 +1,5 @@
-from DictionnaryLibrary import add_word_to_dictionnary, dictionnary_to_list
 from DistanceLibrary import closests_words
 from TF_IDF import computeIDF, computeTFIDF, getLemmes, getTokens
-from TreeTaggerLibrary import analyserFichier
 from TypingErrorsLibrary import existing_words
 import numpy as np
 import argparse
