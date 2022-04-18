@@ -1,3 +1,4 @@
+from encodings import utf_8
 from DictionnaryLibrary import add_word_to_dictionnary, dictionnary_to_list
 from DistanceLibrary import closests_words
 from TF_IDF import computeIDF, computeTFIDF, getLemmes, getTokens
@@ -48,7 +49,7 @@ def n_repl(s, sub, repl, n):
 
 def printText(filename):
 
-    fichier = open(filename,'r',encoding='utf8')
+    fichier = open(filename,'r',encoding= 'utf-8')
     print(fichier.read())
 
 if parser_arguments().command == 'getOriginalText':
@@ -114,11 +115,16 @@ if __name__ == "__main__":
             
             typing_errors_liste = []
             dl_errors_liste = []
+            correction_typing = []
             token = token.lower()
 
-            correction_typing = existing_words(token,dictionnary)
-            correction_dl = closests_words(token,dictionnary)
+            if len(token) <= 7:
+                correction_typing = existing_words(token,dictionnary)
+            else:
+                correction_typing = []
 
+            correction_dl = closests_words(token,dictionnary)
+            
             if (len(correction_typing) == 1 and correction_typing[0] == token):
                 pass
             elif len(correction_typing)==0 :
@@ -170,7 +176,9 @@ if __name__ == "__main__":
         for index_L2,token_L2 in enumerate(tokens_L2):
 
             if not token_L2 in tokens_L1: L3.append( list(L2[index_L2,:]) )
-
+        
+        #print("L3.1 : ",L3)
+      
         """
         TF-IDF
         """
@@ -180,7 +188,7 @@ if __name__ == "__main__":
         Tri des corrections possibles pour chaque mots - on ne garde que celles qui sont les plus probables
         """
 
-        idf = computeIDF(corpus) # calcul de l'importance des mots dans le corpus
+        """ idf = computeIDF(corpus) # calcul de l'importance des mots dans le corpus
 
         for i in range(len(L3)):
 
@@ -191,6 +199,7 @@ if __name__ == "__main__":
                 
                 # Traitement du cas où la correction n'est pas présente dans le corpus
                 # Toutes les corrections sont gardées
+                
                 if word not in idf.keys():
                     new.append(word)
 
@@ -202,7 +211,9 @@ if __name__ == "__main__":
                         new.append(word)
             
             L3[i][1] = new
-
+        
+        print("L3.2 : ",L3) """
+        
         """
         Tri de la liste des corrections - Priorisation des mots les plus saillants
         """
@@ -218,14 +229,17 @@ if __name__ == "__main__":
         Gestion du fichier de correction
         """
         
-        with open(filename, 'r+', encoding='utf8') as firstfile, open('correctedText.txt','a') as secondfile:
+        with open(filename, 'r+', encoding= 'utf-8') as firstfile, open('correctedText.txt','a') as secondfile:
             secondfile.truncate(0)          # on supprimer tout ce qu'il y a écrit dans le fichier
             for line in firstfile :
                 secondfile.write(line) # on recopie le premier fichier dans le fichier retour de correction
         
-        with open(filename,'r', encoding='utf8') as file :
+        with open(filename,'r', encoding='utf-8') as file :
             x = file.read().lower()
             x = x.replace('\'',' ')
+            x = x.replace(',',' ')
+            x = x.replace('.',' ')
+            x = x.replace('\n',' ')
             words = x.split()
 
         print("\nCORRECTEUR D\'ORTHOGRAPHE :")
@@ -235,12 +249,13 @@ if __name__ == "__main__":
         print("Pour ajouter le mot au dictionnaire, tapez +.")
         print("Pour ne rien faire, tapez -.")
         print("--------------------------------\n")
-        
+
         for liste in L3 :
             
             counter = words.count(liste[0])
             
             for occurence in range(counter):
+
                 print ("Suggestions de corrections pour : ", liste[0], " --> ", liste[1])
                 
                 j = input("Choisissez le mot (tapez l'indice - début à 1) : ")           
@@ -265,11 +280,11 @@ if __name__ == "__main__":
                     else:
                         print ("'",liste[0],"'", " sera remplacé par '", liste[1][j], "' dans le texte.")
 
-                        with open('correctedText.txt','r', encoding='utf8') as file :
-                            x = file.read().lower()
+                        with open('correctedText.txt','r') as file :
+                            x = file.read()
                             x = n_repl(x, liste[0], liste[1][j], 1)
                         
-                        with open('correctedText.txt','w', encoding='utf8') as file :
+                        with open('correctedText.txt','w') as file :
                             file.truncate(0)
                             file.write(x)
         
