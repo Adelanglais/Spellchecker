@@ -221,7 +221,7 @@ if __name__ == "__main__":
                     print ("'",liste[0],"'", " sera remplacé par '", liste[1][j], "' dans le texte.")
 
                     with open('correctedText.txt','r') as file :
-                        x = file.read()
+                        x = file.read().lower()
                         x = x.replace(liste[0],liste[1][j])
                     
                     with open('correctedText.txt','w') as file :
