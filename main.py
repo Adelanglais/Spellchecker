@@ -29,16 +29,51 @@ def parser_arguments():
     args = parser.parse_args()
     return args
 
-def printOriginalText(filename):
-    fichier = open(filename,'r')
+def n_repl(s, sub, repl, n):
+
+    longueur = len(sub)
+    compteur = 1
+    find = s.find(sub) # = indice de la 1ere iteration
+    avant = s[:find]
+    apres = s[(find+longueur):]
+
+    while compteur < n:
+
+        find = apres.find(sub)
+        avant = avant + sub + apres[:find]
+        apres = apres[(find+longueur):]
+        compteur += 1
+
+    return avant + repl + apres
+
+def printText(filename):
+
+    fichier = open(filename,'r',encoding='utf8')
     print(fichier.read())
 
 if parser_arguments().command == 'getOriginalText':
+
         if parser_arguments().text is None:
             print("Missing text argument")
             exit(1)
+        
         else : 
-            printOriginalText(parser_arguments().text[0])
+            printText(parser_arguments().text[0])
+
+""" if parser_arguments().command == 'compareTexts':
+
+        if parser_arguments().text is None:
+            print("Missing text argument")
+            exit(1)
+
+        else : 
+            print("\nORIGINAL TEXT :")
+            print("---------------")
+            printText(parser_arguments().text[0])
+
+            print("\nCORRECTED TEXT :")
+            print("------------------")
+            printText(parser_arguments().text[1]) """
 
 if parser_arguments().command == 'doCorrections':
     if parser_arguments().text is None:
@@ -54,7 +89,7 @@ if __name__ == "__main__":
         
         print("\nORIGINAL TEXT :")
         print("---------------")
-        printOriginalText(parser_arguments().text[0])
+        printText(parser_arguments().text[0])
 
         filename = parser_arguments().text[0]
         corpus = parser_arguments().corpus[0]
@@ -183,11 +218,15 @@ if __name__ == "__main__":
         Gestion du fichier de correction
         """
         
-        with open(filename, 'r+') as firstfile, open('correctedText.txt','a') as secondfile:
+        with open(filename, 'r+', encoding='utf8') as firstfile, open('correctedText.txt','a') as secondfile:
             secondfile.truncate(0)          # on supprimer tout ce qu'il y a écrit dans le fichier
             for line in firstfile :
                 secondfile.write(line) # on recopie le premier fichier dans le fichier retour de correction
         
+        with open(filename,'r', encoding='utf8') as file :
+            x = file.read().lower()
+            x = x.replace('\'',' ')
+            words = x.split()
 
         print("\nCORRECTEUR D\'ORTHOGRAPHE :")
         print("--------------------------------")
@@ -199,33 +238,40 @@ if __name__ == "__main__":
         
         for liste in L3 :
             
-            print ("Suggestions de corrections pour : ", liste[0], " --> ", liste[1])
+            counter = words.count(liste[0])
             
-            j = input("Choisissez le mot (tapez l'indice - début à 1) : ")           
-
-            if str(j) == '+':
-                print("Ajout de '",liste[0],"' au dictionnaire.")
-                #add_word_to_dictionnary(liste[0],dictionnary)
-            
-            elif str(j)== '-':
-                pass
-            
-            else:
+            for occurence in range(counter):
+                print ("Suggestions de corrections pour : ", liste[0], " --> ", liste[1])
                 
-                j = int(j) -1 
-                
-                if (j >= (len(liste[1]))):
-                    print("Choix incorrect") 
+                j = input("Choisissez le mot (tapez l'indice - début à 1) : ")           
 
+                if str(j) == '+':
+                    print("Ajout de '",liste[0],"' au dictionnaire.")
+                    #add_word_to_dictionnary(liste[0],dictionnary)
+                
+                elif str(j)== '-':
+                    pass
+                
                 else:
-                    print ("'",liste[0],"'", " sera remplacé par '", liste[1][j], "' dans le texte.")
-
-                    with open('correctedText.txt','r') as file :
-                        x = file.read().lower()
-                        x = x.replace(liste[0],liste[1][j])
                     
-                    with open('correctedText.txt','w') as file :
-                        file.write(x)
+                    j = int(j) -1 
+                    
+                    if (j >= (len(liste[1]))):
+                        print("Choix incorrect") 
+                    
+                    if (j == -1):
+                        print("Choix incorrect")
+                    
+                    else:
+                        print ("'",liste[0],"'", " sera remplacé par '", liste[1][j], "' dans le texte.")
+
+                        with open('correctedText.txt','r', encoding='utf8') as file :
+                            x = file.read().lower()
+                            x = n_repl(x, liste[0], liste[1][j], 1)
+                        
+                        with open('correctedText.txt','w', encoding='utf8') as file :
+                            file.truncate(0)
+                            file.write(x)
         
 
         print("\nFICHIER AVEC CORRECTION :")
