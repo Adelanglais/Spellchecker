@@ -22,9 +22,9 @@ def getLemmes (file):
             # gestion des termes avec une sous-catégorie grammaticale
             if(len(liste_analyse[i])>3):
                 # récupération des lemmes
-                lemmes.append(liste_analyse[i][3])
+                lemmes.append((liste_analyse[i][3]).lower())
             else :
-                lemmes.append(liste_analyse[i][2])
+                lemmes.append((liste_analyse[i][2]).lower())
     
     return lemmes
 
@@ -40,7 +40,7 @@ def getTokens (file):
         if (liste_analyse[i][1] == 'SENT' or liste_analyse[i][1] == 'PUN' or liste_analyse[i][1] == 'KON' or liste_analyse[i][1] == 'DET' or liste_analyse[i][1] == 'PRP'):
             pass
         else:
-            tokens.append(liste_analyse[i][0])
+            tokens.append((liste_analyse[i][0]).lower())
     #print(tokens)
     return tokens
 
@@ -56,7 +56,8 @@ def computeTF(file):
         
     return tfDict
 
- 
+#print(computeTF('text.txt'))
+
 # Calcul de IDF - Donne la fréquence de documents du corpus contenant le terme T
 def computeIDF(corpus):
     
@@ -92,12 +93,16 @@ def computeIDF(corpus):
        
     return idfCnt     
 
+#print(computeIDF('corpus_test'))
 
 # Calcul du score TF-IDf de l'ensemble des textes du corpus
 def computeTFIDF(file, corpus):
     
     tfidf = Counter()
     TF_liste = []
+
+    fichiers = [f for f in listdir(corpus) if isfile(join(corpus, f))]
+    N = len(fichiers)
 
     TF = computeTF(file) # fréquence du mot dans le text
     IDF = computeIDF(corpus) # rareté du mot dans le corpus de référence
@@ -107,10 +112,12 @@ def computeTFIDF(file, corpus):
 
     for keyTF, valTF in TF.items():
         for keyIDF, valIDF in IDF.items():
-            tfidf[keyTF] = valTF * valIDF
+            
+            if keyTF == keyIDF:
+                tfidf[keyTF] = valTF * valIDF
 
-            if keyTF not in IDF.keys(): # cas où le mot traité n'est pas présent dans le corpus de text --> soit le mot est rare, soit le mot est mal orthographié
-                tfidf[keyTF] = 10 # on fixe une valeur élevée au TF-IDF afin que le mot soit corrigé en premier 
+            else: # cas où le mot traité n'est pas présent dans le corpus de text --> soit le mot est rare, soit le mot est mal orthographié
+                tfidf[keyTF] = valTF * math.log(N) 
             
     return tfidf
 
