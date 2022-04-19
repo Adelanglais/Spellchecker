@@ -1,7 +1,7 @@
-from DistanceLexico_Library import closests_words
-from Dictionary_Library import add_word_to_dictionary
+from DistanceLexico_Library import closestsWords
+from Dictionary_Library import addWordToDictionary
 from TFIDF_Library import computeIDF, computeTFIDF, getLemmes, getTokens
-from TypingErrors_Library import existing_words
+from TypingErrors_Library import existingWords
 import numpy as np
 import argparse
 
@@ -143,11 +143,11 @@ if __name__ == "__main__":
 
             # Exception pour les mots de plus de 7 caractères --> dépassement de mémoire
             if len(token) <= 7:
-                correction_typing = existing_words(token,dictionary)
+                correction_typing = existingWords(token,dictionary)
             else:
                 correction_typing = []
 
-            correction_dl = closests_words(token,dictionary)
+            correction_dl = closestsWords(token,dictionary)
             
             if (len(correction_typing) == 1 and correction_typing[0] == token):
                 pass
@@ -283,7 +283,7 @@ if __name__ == "__main__":
 
                 if str(j) == '+':
                     print("Ajout de '",liste[0],"' au dictionnaire.")
-                    add_word_to_dictionary(liste[0],dictionary)
+                    addWordToDictionary(liste[0],dictionary)
                 
                 elif str(j)== '-':
                     pass

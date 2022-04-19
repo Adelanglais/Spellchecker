@@ -1,8 +1,8 @@
 import numpy as np
-from Dictionary_Library import dictionary_to_list
+from Dictionary_Library import dictionaryToList
 
 
-def letter_next_to (letter) :
+def letterNextTo (letter) :
     
     """ Fonction de correction d'un caractère en un caractère voisin
 
@@ -81,7 +81,7 @@ def letter_next_to (letter) :
 # Test d'affichage du résultat    
 #print(nextCharacter('A'))
 
-def two_lists_merging(list1, list2):
+def twoListsMerging(list1, list2):
     final_list = []
     for element1 in list1:
         for element2 in list2:
@@ -89,7 +89,7 @@ def two_lists_merging(list1, list2):
     return final_list
 
 
-def possible_words(word) :
+def possibleWords(word) :
 
     """ Ensemble des corrections du mot possibles
 
@@ -111,14 +111,14 @@ def possible_words(word) :
     # création de la liste des fautes possibles pour chaque lettre du mot 
     list_char = []
     for letter in word :
-        list_char.append(letter_next_to(letter))
+        list_char.append(letterNextTo(letter))
     
     n = len(list_char)
     words_list = list_char[0]
     count = 1
 
     while count != n:
-        words_list = two_lists_merging(words_list,list_char[count])
+        words_list = twoListsMerging(words_list,list_char[count])
         count += 1
     
     for i in range(len(words_list)):
@@ -130,7 +130,7 @@ def possible_words(word) :
 # Test d'affichage du résultat
 # print(possible_words('mzis'))
 
-def existing_words(word, dictionary):
+def existingWords(word, dictionary):
 
     """ Filtrage des corrections 
 
@@ -148,10 +148,10 @@ def existing_words(word, dictionary):
     """
 
     # importation du dictionnaire sous forme de liste
-    dictionary_list = np.array(dictionary_to_list(dictionary))
+    dictionary_list = np.array(dictionaryToList(dictionary))
 
     # liste des combinaisons possibles
-    words_list = np.array(possible_words(word))
+    words_list = np.array(possibleWords(word))
     
     # comparaison des deux listes 
     liste = np.intersect1d(words_list,dictionary_list)

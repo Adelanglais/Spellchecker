@@ -1,7 +1,7 @@
 import textdistance
-from Dictionary_Library import dictionary_to_list
+from Dictionary_Library import dictionaryToList
 
-def closests_words(word, dictionary):
+def closestsWords(word, dictionary):
 
     """ Calcul de la distance Lexicographique
 
@@ -22,7 +22,7 @@ def closests_words(word, dictionary):
     """
 
     word = word.lower() # suprresion des majuscules
-    list_dictionary = dictionary_to_list(dictionary) # passage du dictionnaire sous format list
+    list_dictionary = dictionaryToList(dictionary) # passage du dictionnaire sous format list
     closests_words = [] # initialisation de la liste
 
     for j in list_dictionary : 
