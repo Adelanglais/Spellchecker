@@ -1,6 +1,7 @@
-from DistanceLibrary import closests_words
-from TF_IDF import computeIDF, computeTFIDF, getLemmes, getTokens
-from TypingErrorsLibrary import existing_words
+from DistanceLexico_Library import closests_words
+from Dictionnary_Library import add_word_to_dictionnary
+from TFIDF_Library import computeIDF, computeTFIDF, getLemmes, getTokens
+from TypingErrors_Library import existing_words
 import numpy as np
 import argparse
 
@@ -8,8 +9,8 @@ import argparse
 def parser_arguments():
 
     """
-    Manage the input from the terminal.
-    :return : parser
+    Gestion des entrées du terminal
+    return : parser
     """
     parser = argparse.ArgumentParser(prog = 'Correcteur_ToolKit',
                                     usage = 'python3 %(prog)s [command] --text [option] --corrected [option] --corpus [option]',
@@ -28,13 +29,24 @@ def parser_arguments():
                     help="Sequence of 'strings' of the wanted corpus")
 
     args = parser.parse_args()
+
     return args
 
 def n_repl(s, sub, repl, n):
 
+    """ Fonction permettant de remplacer une substring dans uns string
+
+    Paramètres :
+    ------------
+    s : la string principale
+    sub : la substring que l'on veut remplacer
+    repl : ce par quoi nous souhaitont remplacer sub
+    n : nombre d'occurence de sub dans s
+    """
+
     longueur = len(sub)
     compteur = 1
-    find = s.find(sub) # = indice de la 1ere iteration
+    find = s.find(sub) # indice de la 1ere iteration
     avant = s[:find]
     apres = s[(find+longueur):]
 
@@ -47,10 +59,9 @@ def n_repl(s, sub, repl, n):
 
     return avant + repl + apres
 
-def printText(filename):
-
-    fichier = open(filename,'r',encoding= 'utf-8')
-    print(fichier.read())
+#*****************************************************************************
+#                   GESTION DES COMMANDES DU TERMINAL
+#*****************************************************************************
 
 if parser_arguments().command == 'getOriginalText':
 
@@ -59,19 +70,24 @@ if parser_arguments().command == 'getOriginalText':
             exit(1)
         
         else : 
-            printText(parser_arguments().text[0])
+            fichier = open(parser_arguments().text[0],'r',encoding= 'utf-8')
+            print(fichier.read())
 
 if parser_arguments().command == 'compareTexts':
+
     if parser_arguments().text is None:
         print("Missing text argument")
         exit(1)
+
     if parser_arguments().corrected is None:
         print("Missing corrected text argument")
         exit(1)
+
     else : 
         print("\nORIGINAL TEXT :")
         print("---------------")
-        printText(parser_arguments().text[0])
+        fichier = open(parser_arguments().text[0],'r',encoding= 'utf-8')
+        print(fichier.read())
         
         print("\nCORRECTED TEXT :")
         print("---------------")
@@ -79,9 +95,11 @@ if parser_arguments().command == 'compareTexts':
         print(fichier.read())
 
 if parser_arguments().command == 'doCorrections':
+
     if parser_arguments().text is None:
         print("Missing text argument")            
         exit(1)
+
     if parser_arguments().corpus is None:
         print("Missing corpus argument")
         exit(1)
@@ -92,10 +110,11 @@ if __name__ == "__main__":
         
         print("\nORIGINAL TEXT :")
         print("---------------")
-        printText(parser_arguments().text[0])
+        fichier = open(parser_arguments().text[0],'r',encoding= 'utf-8')
+        print(fichier.read())
 
-        filename = parser_arguments().text[0]
-        corpus = parser_arguments().corpus[0]
+        filename = parser_arguments().text[0] # récupération du nom du fichier à corriger
+        corpus = parser_arguments().corpus[0] # récupération du nom du corpus de référence
         dictionnary = 'dictionnaire.txt'
 
         """
@@ -104,22 +123,25 @@ if __name__ == "__main__":
         file_tokens = list(set(getTokens(filename)))
         file_lemmes = list(set(getLemmes(filename)))
         
-        #print(file_tokens)
-        #print(file_lemmes)
+        #print("Liste des tokens : ",file_tokens)
+        #print("Liste des lemmes : ",file_lemmes)
 
         """
-        L1 et L2 - Création des listes de fautes de frappes
+        L1 et L2 - Création des listes de corrections
+        Pour chaque token du texte, on identifie les corrections possibles via deux méthodes
+        1. Fautes de frappes
+        2. Distance lexicographique
         """
-        L1 = [] # liste des erreurs frappes
-        L2 = [] # liste basé sur le calcul de distance lexicographique
+        L1 = [] # liste de corrections des erreurs frappes
+        L2 = [] # liste des corrections basé sur le calcul de distance lexicographique
 
         for token in file_tokens:
             
-            typing_errors_liste = []
-            dl_errors_liste = []
-            correction_typing = []
+            typing_errors_liste = [] # liste des corrections pour fautes de frappes
+            dl_errors_liste = [] # liste des corrections avec calcul de distance
             token = token.lower()
 
+            # Exception pour les mots de plus de 7 caractères --> dépassement de mémoire
             if len(token) <= 7:
                 correction_typing = existing_words(token,dictionnary)
             else:
@@ -174,7 +196,6 @@ if __name__ == "__main__":
             else:
                 L3.append( list(L1[index_L1,:]) )
 
-
         for index_L2,token_L2 in enumerate(tokens_L2):
 
             if not token_L2 in tokens_L1: L3.append( list(L2[index_L2,:]) )
@@ -200,13 +221,12 @@ if __name__ == "__main__":
             for word in corrections:
                 
                 # Traitement du cas où la correction n'est pas présente dans le corpus
-                # Toutes les corrections sont gardées
+                # La correction est gardée
                 
                 if word not in idf.keys():
                     new.append(word)
 
-                # Si la correction est dans le corpus et que sa valeur d'IDF est supérieure à un certain seuil, on garde 
-                # la correction
+                # Si la correction est dans le corpus et que sa valeur d'IDF est supérieure à un certain seuil, on garde la correction
                 # Sinon, la correction n'est pas conservée car non pertinente par rapport au corpus   
                 for key, val in idf.items():
                     if word == key and val > 1 : 
@@ -214,9 +234,9 @@ if __name__ == "__main__":
             
             L3[i][1] = new
         
-           
         """
         Tri de la liste des corrections - Priorisation des mots les plus saillants
+        Dans l'utilisation du correctuers, les mots corrigés en premiers sont les plus importants
         """
         
         for liste in L3:
@@ -231,7 +251,7 @@ if __name__ == "__main__":
         """
         
         with open(filename, 'r+', encoding= 'utf-8') as firstfile, open('correctedText.txt','a') as secondfile:
-            secondfile.truncate(0)          # on supprimer tout ce qu'il y a écrit dans le fichier
+            secondfile.truncate(0) # on supprime tout ce qu'il y a écrit dans le fichier de correction
             for line in firstfile :
                 secondfile.write(line) # on recopie le premier fichier dans le fichier retour de correction
         
@@ -263,7 +283,7 @@ if __name__ == "__main__":
 
                 if str(j) == '+':
                     print("Ajout de '",liste[0],"' au dictionnaire.")
-                    #add_word_to_dictionnary(liste[0],dictionnary)
+                    add_word_to_dictionnary(liste[0],dictionnary)
                 
                 elif str(j)== '-':
                     pass
