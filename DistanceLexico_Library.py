@@ -32,11 +32,17 @@ def closests_words(word, dictionnary):
 
         # si cette distance est inférieur à un certain seuil, nous ajoutons le mot du dictionnaire à notre liste
         # remarque : la valeur de seuil est fixée arbitrairement --> plus elle est élevée, plus y aura de mots possibles dans notre liste
-        if distance <= 1 :
-            closests_words.append(j)
+        if len(word) <= 6: 
+            if distance <= 1 :
+                closests_words.append(j)
+        
+        if len(word) > 6 :
+            if distance <= 2 :
+                closests_words.append(j)
+
     
     # Résultat
     return closests_words
 
 # Test affichage des résultats
-#print(closests_words('mzis','dictionnaire.txt'))
+#print(closests_words('infromatique','dictionnaire.txt'))
