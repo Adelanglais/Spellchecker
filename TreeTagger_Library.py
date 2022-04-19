@@ -30,7 +30,6 @@ def getAnnotationsFromTreeTaggerTags(tags):
             
     return annotations
 
-
 # Analyse morphosyntaxique
 def analyseMorphoSyntaxiqueTexte(texte, langue='fr'):
     # On exécute Tree-Tagger
@@ -39,7 +38,6 @@ def analyseMorphoSyntaxiqueTexte(texte, langue='fr'):
     tags = tagger.tag_text(texte)
     
     return getAnnotationsFromTreeTaggerTags(tags)
-
 
 def analyserFichier(filename):
 
