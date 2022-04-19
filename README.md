@@ -53,4 +53,4 @@ python main.py compareTexts --text [exemple]
 3. *--corpus* : attend le nom du dossier corpus
 
 ## Fonctionnement général du programme 
-
+<img src="https://github.com/Adelanglais/Spellchecker/blob/main/diagPGM.jpg"/>
