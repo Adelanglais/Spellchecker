@@ -1,5 +1,5 @@
 import numpy as np
-from Dictionnary_Library import dictionnary_to_list
+from Dictionary_Library import dictionary_to_list
 
 
 def letter_next_to (letter) :
@@ -130,7 +130,7 @@ def possible_words(word) :
 # Test d'affichage du résultat
 # print(possible_words('mzis'))
 
-def existing_words(word, dictionnary):
+def existing_words(word, dictionary):
 
     """ Filtrage des corrections 
 
@@ -139,7 +139,7 @@ def existing_words(word, dictionnary):
     Paramètres
     ----------
     word : le mot à analyser
-    dictionnary : le dictionnaire
+    dictionary : le dictionnaire
 
     Returns
     -------
@@ -148,13 +148,13 @@ def existing_words(word, dictionnary):
     """
 
     # importation du dictionnaire sous forme de liste
-    dictionnary_list = np.array(dictionnary_to_list(dictionnary))
+    dictionary_list = np.array(dictionary_to_list(dictionary))
 
     # liste des combinaisons possibles
     words_list = np.array(possible_words(word))
     
     # comparaison des deux listes 
-    liste = np.intersect1d(words_list,dictionnary_list)
+    liste = np.intersect1d(words_list,dictionary_list)
 
     final_liste = []
     for word in liste:

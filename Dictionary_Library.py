@@ -1,4 +1,4 @@
-def dictionnary_to_list(file) :
+def dictionary_to_list(file) :
     
     """ Importation du dictionnaire sous forme d'une liste de mots
 
@@ -23,9 +23,9 @@ def dictionnary_to_list(file) :
     return final_list
 
 # Test d'affichage du résultat du dictionnaire
-# print(dictionnary_to_list('dictionnaire.txt'))
+# print(dictionary_to_list('dictionnaire.txt'))
 
-def add_word_to_dictionnary(word,file) :
+def add_word_to_dictionary(word,file) :
 
     """ Ajout d'un mot au dictionnaire
 
@@ -36,9 +36,9 @@ def add_word_to_dictionnary(word,file) :
 
     """
 
-    dictionnary = dictionnary_to_list(file)
+    dictionary = dictionary_to_list(file)
 
-    if (word.lower() not in dictionnary) :
+    if (word.lower() not in dictionary) :
         fichier = open(file, "a",encoding='UTF-8')
         
         # écriture du mot dans le fichier 

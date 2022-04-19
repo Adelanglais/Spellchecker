@@ -1,7 +1,7 @@
 import textdistance
-from Dictionnary_Library import dictionnary_to_list
+from Dictionary_Library import dictionary_to_list
 
-def closests_words(word, dictionnary):
+def closests_words(word, dictionary):
 
     """ Calcul de la distance Lexicographique
 
@@ -22,10 +22,10 @@ def closests_words(word, dictionnary):
     """
 
     word = word.lower() # suprresion des majuscules
-    list_dictionnary = dictionnary_to_list(dictionnary) # passage du dictionnaire sous format list
+    list_dictionary = dictionary_to_list(dictionary) # passage du dictionnaire sous format list
     closests_words = [] # initialisation de la liste
 
-    for j in list_dictionnary : 
+    for j in list_dictionary : 
 
         # pour chaque mot du dictionnaire, on calcule la distance avec le mot du passé en paramètre
         distance = textdistance.levenshtein(word,j)

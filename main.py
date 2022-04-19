@@ -1,5 +1,5 @@
 from DistanceLexico_Library import closests_words
-from Dictionnary_Library import add_word_to_dictionnary
+from Dictionary_Library import add_word_to_dictionary
 from TFIDF_Library import computeIDF, computeTFIDF, getLemmes, getTokens
 from TypingErrors_Library import existing_words
 import numpy as np
@@ -115,7 +115,7 @@ if __name__ == "__main__":
 
         filename = parser_arguments().text[0] # récupération du nom du fichier à corriger
         corpus = parser_arguments().corpus[0] # récupération du nom du corpus de référence
-        dictionnary = 'dictionnaire.txt'
+        dictionary = 'dictionnaire.txt'
 
         """
         Tokenisation et lemmatisation du texte fournit en entrée
@@ -143,11 +143,11 @@ if __name__ == "__main__":
 
             # Exception pour les mots de plus de 7 caractères --> dépassement de mémoire
             if len(token) <= 7:
-                correction_typing = existing_words(token,dictionnary)
+                correction_typing = existing_words(token,dictionary)
             else:
                 correction_typing = []
 
-            correction_dl = closests_words(token,dictionnary)
+            correction_dl = closests_words(token,dictionary)
             
             if (len(correction_typing) == 1 and correction_typing[0] == token):
                 pass
@@ -283,7 +283,7 @@ if __name__ == "__main__":
 
                 if str(j) == '+':
                     print("Ajout de '",liste[0],"' au dictionnaire.")
-                    add_word_to_dictionnary(liste[0],dictionnary)
+                    add_word_to_dictionary(liste[0],dictionary)
                 
                 elif str(j)== '-':
                     pass
