@@ -41,6 +41,7 @@ def getLemmes (file):
             else :
                 lemmes.append((liste_analyse[i][2]).lower()) # récupération des lemmes
     
+    # Résultat
     return lemmes
 
 # Affichage des lemmes du fichier
@@ -75,6 +76,7 @@ def getTokens (file):
         else:
             tokens.append((liste_analyse[i][0]).lower())
     
+    # Résultat
     return tokens
 
 # Affichage des tokens du fichier
@@ -105,7 +107,8 @@ def computeTF(file):
 
         c = tokens_liste.count(tokens_liste[i]) # calcul du nombre de fois que le mot apparaît dans le texte
         tfDict[tokens_liste[i]] = c / float(len(tokens_liste)) # calcul de la fréquence et ajout au dictionnaire
-        
+
+    # Résultat    
     return tfDict
 
 # Affichage de TF
@@ -163,7 +166,8 @@ def computeIDF(corpus):
     # Calcul d'IDF
     for key, val in idfCnt.items():
         idfCnt[key] = math.log(N/float(val))
-      
+
+    # Résultat  
     return idfCnt   
 
 # Affichage d'IDF
@@ -202,7 +206,8 @@ def computeTFIDF(file, corpus):
 
         if IDF.get(keyTF) == None : # cas où le mot traité n'est pas présent dans le corpus de text --> soit le mot est rare, soit le mot est mal orthographié
             tfidf[keyTF] = valTF*10
-            
+
+    # Résultat        
     return tfidf
 
 # Affichage des résultats
