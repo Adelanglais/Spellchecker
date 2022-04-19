@@ -49,7 +49,8 @@ python main.py compareTexts --text [exemple]
 **Arguments**
 
 1. *--text* : attend le nom du fichier à corriger
-2. *--corpus* : attend le nom du dossier corpus
+2. *--corrected* : attend le nom du fichier corrigé
+3. *--corpus* : attend le nom du dossier corpus
 
 ## Fonctionnement général du programme 
 
