@@ -1,4 +1,3 @@
-from matplotlib.pyplot import text
 from prometheus_client import Counter
 from TreeTaggerLibrary import *
 import math 
@@ -9,25 +8,42 @@ from collections import Counter
 
 def getLemmes (file):
 
+    """Accès aux lemmes des mots du fichier à traiter
+
+    Paramètres
+    ----------
+    file : le fichier à analyser
+
+    Returns 
+    -------
+    list 
+        la liste des lemmes du fichier
+    
+    """
+
     # récupération de la liste des tokens + lemmes (analyse morphosyntaxique)
     liste_analyse = analyserFichier(file)
+    print(liste_analyse)
 
     lemmes = []
-    for i in range(len(liste_analyse)):
-        # suppression des ponctuation et des numéros car non pertinents pour l'analyse des 
-        if (liste_analyse[i][1] == 'SENT' or liste_analyse[i][1] == 'PUN' or liste_analyse[i][1] == 'KON' or liste_analyse[i][1] == 'DET' or liste_analyse[i][1] == 'PRP' or liste_analyse[i][1] == 'PRO'):
 
+    for i in range(len(liste_analyse)):
+        
+        # suppression des ponctuations, numéros, conjonctions de coordination, etc. car non pertinents pour l'analyse
+        if (liste_analyse[i][1] == 'SENT' or liste_analyse[i][1] == 'PUN' or liste_analyse[i][1] == 'KON' or liste_analyse[i][1] == 'DET' or liste_analyse[i][1] == 'PRP' or liste_analyse[i][1] == 'PRO'):
             pass
+
         else:
             # gestion des termes avec une sous-catégorie grammaticale
             if(len(liste_analyse[i])>3):
-                # récupération des lemmes
-                lemmes.append((liste_analyse[i][3]).lower())
+                lemmes.append((liste_analyse[i][3]).lower()) # récupération des lemmes
+            
             else :
-                lemmes.append((liste_analyse[i][2]).lower())
+                lemmes.append((liste_analyse[i][2]).lower()) # récupération des lemmes
     
     return lemmes
 
+print('Lemmes : ', getLemmes('mail.txt'))
 
 def getTokens (file):
 
@@ -43,6 +59,8 @@ def getTokens (file):
             tokens.append((liste_analyse[i][0]).lower())
     #print(tokens)
     return tokens
+
+print ('Tokens : ', getTokens('mail.txt'))
 
 # Calcul de TF - Donne la fréquence d'un terme dans un document
 def computeTF(file):
@@ -93,7 +111,7 @@ def computeIDF(corpus):
       
     return idfCnt   
 
-#print(computeIDF('corpus_test'))
+#print(computeIDF('corpus_mail'))
 
 # Calcul du score TF-IDf de l'ensemble des textes du corpus
 def computeTFIDF(file, corpus):
@@ -123,4 +141,4 @@ def computeTFIDF(file, corpus):
     return tfidf
 
 # Affichage des résultats
-#print(computeTFIDF('mail.txt','corpus_mail'))
+print(computeTFIDF('mail.txt','corpus_mail'))
