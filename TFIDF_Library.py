@@ -86,7 +86,7 @@ def computeTF(file):
 
     """ Calcul de l'indicateur TF
 
-    Fonction permet d'obtenir la fréquence des termes présents dans le document passé en paramètre
+    Fonction qui permet d'obtenir la fréquence des termes présents dans le document passé en paramètre
 
     Paramètres
     ----------
@@ -138,7 +138,7 @@ def computeIDF(corpus):
 
     tokens_liste = [] # initialisation de la liste des tokens du fichier traité
     
-    # Création de la liste des tokens pour chaque textes présents dans le corpus
+    # Création de la liste des tokens pour chaque texte présent dans le corpus
     for nom_document in fichiers :
 
         filename = corpus + "/" + nom_document
