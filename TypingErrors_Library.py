@@ -100,7 +100,7 @@ def possibleWords(word) :
     Returns
     -------
     list
-        une liste contenant toutes les combinaison de corrections des caractères qui composent le mot étudié
+        une liste contenant toutes les combinaisons de corrections des caractères qui composent le mot étudié
     """
 
     word = word.upper()

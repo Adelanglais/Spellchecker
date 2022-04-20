@@ -132,12 +132,12 @@ if __name__ == "__main__":
         1. Fautes de frappes
         2. Distance lexicographique
         """
-        L1 = [] # liste de corrections des erreurs frappes
-        L2 = [] # liste des corrections basé sur le calcul de distance lexicographique
+        L1 = [] # liste des corrections basé sur les erreurs de frappe
+        L2 = [] # liste des corrections basé sur le calcul de distances lexicographiques
 
         for token in file_tokens:
             
-            typing_errors_liste = [] # liste des corrections pour fautes de frappes
+            typing_errors_liste = [] # liste des corrections pour fautes de frappe
             dl_errors_liste = [] # liste des corrections avec calcul de distance
             token = token.lower()
 
@@ -236,7 +236,7 @@ if __name__ == "__main__":
         
         """
         Tri de la liste des corrections - Priorisation des mots les plus saillants
-        Dans l'utilisation du correctuers, les mots corrigés en premiers sont les plus importants
+        Dans l'utilisation du correctueur, les mots corrigés en premiers sont les plus importants
         """
         
         for liste in L3:

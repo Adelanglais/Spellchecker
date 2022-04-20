@@ -40,7 +40,13 @@ python main.py doCorrections --text mail.txt --corpus corpus_mail
 python main.py getOriginalText --text [exemple]
 ```
 
-1. *compareTexts* : pour visualiser le texte original avant corrections et celui corrigé
+2. *doCorrections* : lance la procédure de correction sur le texte passé en paramètre par rapport au corpus de référence également passé en paramètre
+
+```python
+python main.py doCorrections --text [exemple] --corpus [exemple]
+```
+
+3. *compareTexts* : pour visualiser le texte original avant corrections et celui corrigé
 
 ```python
 python main.py compareTexts --text [exemple]

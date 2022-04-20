@@ -23,35 +23,20 @@ Je suis aujourd’hui Data Scientist chez Sopra Steria à Aix-en-Provence où je
 
  
 
- 
-
-
-
-
-
- 
 
 Caroline GARDET
 Manager d’une équipe/tribu de data scientists
 
 Sopra Steria
 
- 
-
- 
-
- « Après un parcours en école d’ingénieur Génie Chimique, je me suis réorientée vers les mathématiques avec un master recherche en ingénierie mathématique puis une thèse en statistiques appliquées à la géologie. C’est lors de ma thèse que j’ai découvert le monde de la data science via la computer vision.
+« Après un parcours en école d’ingénieur Génie Chimique, je me suis réorientée vers les mathématiques avec un master recherche en ingénierie mathématique puis une thèse en statistiques appliquées à la géologie. C’est lors de ma thèse que j’ai découvert le monde de la data science via la computer vision.
 
 Aujourd’hui, je suis manager, au Centre d’Expertise Digital chez Sopra Steria à Paris, d’une équipe de data scientists, data engineers, et data architects. »
 
-
-
 Comment ça fonctionne ?
 
- 
 
 Le webinar se tiendra sous Microsoft Teams. Vous pourrez y accéder directement depuis votre navigateur habituel, en cliquant sur le lien ci-dessus : pas de téléchargement d’application nécessaire.
 
- 
 
 L’équipe des Relations avec l’Enseignement Supérieur
